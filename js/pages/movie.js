@@ -13,9 +13,19 @@ const MAX_CAST = 12;
 
 const container = document.querySelector("#movie-details");
 
-function getMovieId() {
-  const id = new URLSearchParams(window.location.search).get("id");
-  return /^\d+$/.test(id ?? "") ? id : null;
+function showNotFound(message) {
+  document.title = "Movie not found — CineVault";
+
+  const notFound = createElement("section", "not-found container");
+  const homeLink = createElement("a", "not-found__link", "Back to home");
+  homeLink.href = "index.html";
+
+  notFound.append(
+    createElement("h1", "not-found__title", "Movie not found"),
+    createElement("p", "not-found__text", message),
+    homeLink,
+  );
+  container.replaceChildren(notFound);
 }
 
 function findTrailer(videos) {
@@ -128,9 +138,14 @@ function renderMovie(movie) {
 }
 
 async function loadMovie() {
-  const id = getMovieId();
+  const id = new URLSearchParams(window.location.search).get("id");
+
   if (!id) {
-    showError(container, "No movie selected. Head back to the home page and pick one!");
+    showNotFound("No movie was chosen. Pick one from the home page to see its details.");
+    return;
+  }
+  if (!/^\d+$/.test(id)) {
+    showNotFound("This link doesn't point to a valid movie. It may have been mistyped.");
     return;
   }
 
@@ -141,10 +156,11 @@ async function loadMovie() {
     renderMovie(movie);
   } catch (error) {
     console.error(error);
-    const message = error.status === 404
-      ? "We couldn't find that movie."
-      : "Couldn't load this movie. Please try again later.";
-    showError(container, message);
+    if (error.status === 404) {
+      showNotFound("We couldn't find a movie with that ID. It may have been removed.");
+    } else {
+      showError(container, "Couldn't load this movie. Please try again later.");
+    }
   }
 }
 

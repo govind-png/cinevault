@@ -131,3 +131,33 @@
   height: 100%;
   border: 0;
 }
+
+/* Missing, invalid or unknown movie id */
+.not-found {
+  padding-top: var(--space-lg);
+  text-align: center;
+}
+
+.not-found__title {
+  margin-bottom: var(--space-sm);
+}
+
+.not-found__text {
+  margin-bottom: var(--space-lg);
+  color: var(--color-text-muted);
+}
+
+.not-found__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-target);
+  padding: 0 var(--space-lg);
+  border-radius: var(--radius);
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+  font-weight: 600;
+}
+
+.not-found__link:focus-visible {
+  outline-color: var(--color-text);
+}
