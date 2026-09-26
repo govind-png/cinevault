@@ -1,0 +1,11 @@
+# CineVault is plain HTML, CSS and JavaScript: no build step.
+[build]
+  publish = "public"
+
+[functions]
+  directory = "netlify/functions"
+
+# `netlify dev`: serve the static files and run the functions locally
+[dev]
+  framework = "#static"
+  port = 8888

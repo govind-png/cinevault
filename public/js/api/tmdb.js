@@ -1,17 +1,16 @@
-import { TMDB_TOKEN, TMDB_BASE_URL } from "../config.js";
+// All TMDB requests go through our serverless proxy (netlify/functions/tmdb.mjs),
+// which adds the secret token on the server. The browser never sees it.
+const API_BASE_URL = "/api/tmdb";
 
 // Last page TMDB's /discover endpoint will return, whatever total_pages says.
 export const MAX_DISCOVER_PAGES = 500;
 
 async function request(endpoint, params = {}) {
   const query = new URLSearchParams(params).toString();
-  const url = `${TMDB_BASE_URL}${endpoint}${query ? `?${query}` : ""}`;
+  const url = `${API_BASE_URL}${endpoint}${query ? `?${query}` : ""}`;
 
   const response = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${TMDB_TOKEN}`,
-      accept: "application/json",
-    },
+    headers: { accept: "application/json" },
   });
 
   if (!response.ok) {
