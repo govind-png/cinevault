@@ -23,6 +23,27 @@ a {
   text-decoration: none;
 }
 
+/* One focus style for every link, button, input and select */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Elements we focus from JavaScript (tabindex="-1") don't need a ring */
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
+/* Respect the "reduce motion" setting in the operating system */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* Hidden on screen but still read by screen readers */
 .visually-hidden {
   position: absolute;

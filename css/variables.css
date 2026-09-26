@@ -2,6 +2,7 @@
   --color-bg: #0f1115;
   --color-surface: #1a1d24;
   --color-surface-light: #2a2d35;
+  --color-border: #6b6f7a; /* at least 3:1 against bg and surface, so controls are visible */
   --color-text: #e8e8ea;
   --color-text-muted: #9a9ca5;
   --color-accent: #f5c518;

@@ -8,10 +8,6 @@
   color: var(--color-text-muted);
 }
 
-.section-title:focus {
-  outline: none;
-}
-
 .watchlist-item {
   display: flex;
   flex-direction: column;
@@ -20,7 +16,7 @@
 
 .watchlist-item__remove {
   padding: var(--space-xs) var(--space-sm);
-  border: 1px solid var(--color-surface-light);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius);
   background-color: transparent;
   color: var(--color-text-muted);
@@ -32,9 +28,4 @@
 .watchlist-item__remove:hover {
   border-color: var(--color-accent);
   color: var(--color-accent);
-}
-
-.watchlist-item__remove:focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 2px;
 }
