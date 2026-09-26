@@ -8,12 +8,17 @@ function createLogo() {
   return logo;
 }
 
-function createNav() {
-  const nav = createElement("nav", "site-nav");
-  nav.setAttribute("aria-label", "Main");
+function createNavLink(href, text) {
+  const link = createElement("a", "site-nav__link", text);
+  link.href = href;
+  if (window.location.pathname.endsWith(`/${href}`)) {
+    link.setAttribute("aria-current", "page");
+  }
+  return link;
+}
 
-  const link = createElement("a", "site-nav__link", "Watchlist ");
-  link.href = "watchlist.html";
+function createWatchlistLink() {
+  const link = createNavLink("watchlist.html", "Watchlist ");
 
   const count = createElement("span", "site-nav__count");
   const countLabel = createElement("span", "visually-hidden");
@@ -28,11 +33,14 @@ function createNav() {
   }
   updateCount();
   onWatchlistChange(updateCount);
-  if (window.location.pathname.endsWith("/watchlist.html")) {
-    link.setAttribute("aria-current", "page");
-  }
 
-  nav.append(link);
+  return link;
+}
+
+function createNav() {
+  const nav = createElement("nav", "site-nav");
+  nav.setAttribute("aria-label", "Main");
+  nav.append(createNavLink("discover.html", "Discover"), createWatchlistLink());
   return nav;
 }
 

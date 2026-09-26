@@ -25,6 +25,11 @@
   font-weight: 700;
 }
 
+.site-nav {
+  display: flex;
+  gap: var(--space-md);
+}
+
 .site-nav__link {
   font-weight: 600;
   color: var(--color-text-muted);
