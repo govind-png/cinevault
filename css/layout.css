@@ -11,6 +11,14 @@
   margin-bottom: var(--space-lg);
 }
 
+.site-header__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
 .logo {
   font-size: 1.5rem;
   font-weight: 700;

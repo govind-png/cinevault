@@ -1,4 +1,5 @@
 import { getTrendingMovies, getPopularMovies, getTopRatedMovies } from "../api/tmdb.js";
+import { renderHeader } from "../components/header.js";
 import { createMovieCard } from "../components/movieCard.js";
 import { showLoader, showError } from "../components/feedback.js";
 
@@ -27,4 +28,5 @@ async function loadSection({ selector, fetchMovies }) {
   }
 }
 
+renderHeader();
 sections.forEach(loadSection);

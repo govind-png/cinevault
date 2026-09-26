@@ -1,5 +1,6 @@
 import { getMovieDetails } from "../api/tmdb.js";
 import { TMDB_IMAGE_BASE_URL } from "../config.js";
+import { renderHeader } from "../components/header.js";
 import { createCastCard } from "../components/castCard.js";
 import { showLoader, showError } from "../components/feedback.js";
 import { createElement } from "../utils/dom.js";
@@ -140,4 +141,5 @@ async function loadMovie() {
   }
 }
 
+renderHeader();
 loadMovie();
