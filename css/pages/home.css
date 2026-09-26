@@ -1,0 +1,7 @@
+.movie-section + .movie-section {
+  margin-top: var(--space-lg);
+}
+
+main {
+  padding-bottom: var(--space-lg);
+}

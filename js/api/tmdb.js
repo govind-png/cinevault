@@ -18,3 +18,10 @@ async function request(endpoint) {
 export function getTrendingMovies() {
   return request("/trending/movie/week");
 }
+export function getPopularMovies() {
+  return request("/movie/popular");
+}
+
+export function getTopRatedMovies() {
+  return request("/movie/top_rated");
+}
