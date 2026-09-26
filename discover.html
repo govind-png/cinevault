@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discover — CineVault</title>
+
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages/discover.css">
+</head>
+<body>
+  <main class="container discover-page">
+    <h1 id="discover-title" class="section-title" tabindex="-1">Discover Movies</h1>
+
+    <section class="discover-filters" aria-label="Filters">
+      <div class="discover-filters__row">
+        <div class="discover-filters__field">
+          <label class="discover-filters__label" for="sort-select">Sort by</label>
+          <select id="sort-select" class="discover-filters__select"></select>
+        </div>
+        <div class="discover-filters__field">
+          <label class="discover-filters__label" for="year-select">Release year</label>
+          <select id="year-select" class="discover-filters__select"></select>
+        </div>
+      </div>
+
+      <p id="genre-label" class="discover-filters__label">Genres</p>
+      <div id="genre-chips" class="discover-filters__genres" role="group" aria-labelledby="genre-label"></div>
+    </section>
+
+    <p id="discover-status" class="discover-page__status" role="status" aria-live="polite"></p>
+    <div id="discover-grid" class="movie-grid"></div>
+
+    <div class="discover-page__more">
+      <button id="load-more" class="discover-page__load-more" type="button" hidden>Load more</button>
+      <div id="load-more-feedback"></div>
+    </div>
+  </main>
+
+  <script type="module" src="js/pages/discover.js"></script>
+</body>
+</html>
