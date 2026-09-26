@@ -11,7 +11,8 @@ export function createCastCard(person) {
   photo.src = person.profile_path
     ? `${TMDB_IMAGE_BASE_URL}/w185${person.profile_path}`
     : PLACEHOLDER_PROFILE;
-  photo.alt = `Photo of ${person.name}`;
+  // The name is printed right below, so the photo doesn't need to repeat it.
+  photo.alt = "";
 
   const name = createElement("p", "cast-card__name", person.name);
   const character = createElement("p", "cast-card__character", person.character || "—");

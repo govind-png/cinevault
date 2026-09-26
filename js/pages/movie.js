@@ -3,9 +3,10 @@ import { TMDB_IMAGE_BASE_URL } from "../config.js";
 import { renderHeader } from "../components/header.js";
 import { createCastCard } from "../components/castCard.js";
 import { createWatchlistButton } from "../components/watchlistButton.js";
+import { createRating } from "../components/rating.js";
 import { showLoader, showError } from "../components/feedback.js";
 import { createElement } from "../utils/dom.js";
-import { getYear, formatRating, formatRuntime } from "../utils/format.js";
+import { getYear, formatRuntime } from "../utils/format.js";
 
 const PLACEHOLDER_POSTER = "assets/images/no-poster.svg";
 const MAX_CAST = 12;
@@ -51,7 +52,7 @@ function createHero(movie) {
   meta.append(
     createElement("span", "", getYear(movie.release_date)),
     createElement("span", "", formatRuntime(movie.runtime)),
-    createElement("span", "movie-hero__rating", `★ ${formatRating(movie.vote_average)}`),
+    createRating("movie-hero__rating", movie.vote_average),
   );
   info.append(meta);
 
