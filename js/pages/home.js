@@ -1,7 +1,12 @@
-import { getTrendingMovies } from "../api/tmdb.js";
+import { getTrendingMovies, getPopularMovies, getTopRatedMovies } from "../api/tmdb.js";
 import { createMovieCard } from "../components/movieCard.js";
+import { showLoader, showError } from "../components/feedback.js";
 
-const trendingGrid = document.querySelector("#trending-grid");
+const sections = [
+  { selector: "#trending-grid", fetchMovies: getTrendingMovies },
+  { selector: "#popular-grid", fetchMovies: getPopularMovies },
+  { selector: "#top-rated-grid", fetchMovies: getTopRatedMovies },
+];
 
 function renderMovies(movies, container) {
   const fragment = document.createDocumentFragment();
@@ -9,14 +14,17 @@ function renderMovies(movies, container) {
   container.replaceChildren(fragment);
 }
 
-async function init() {
+async function loadSection({ selector, fetchMovies }) {
+  const container = document.querySelector(selector);
+  showLoader(container);
+
   try {
-    const data = await getTrendingMovies();
-    renderMovies(data.results, trendingGrid);
+    const data = await fetchMovies();
+    renderMovies(data.results, container);
   } catch (error) {
     console.error(error);
-    trendingGrid.textContent = "Couldn't load movies. Please try again later.";
+    showError(container, "Couldn't load these movies. Please try again later.");
   }
 }
 
-init();
+sections.forEach(loadSection);
