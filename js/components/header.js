@@ -1,6 +1,17 @@
 import { createElement } from "../utils/dom.js";
 import { getWatchlist, onWatchlistChange } from "../utils/storage.js";
 
+// Lets keyboard users jump past the header straight to the page content.
+function createSkipLink() {
+  const main = document.querySelector("main");
+  main.id ||= "main-content";
+  main.tabIndex = -1;
+
+  const link = createElement("a", "skip-link", "Skip to main content");
+  link.href = `#${main.id}`;
+  return link;
+}
+
 function createLogo() {
   const logo = createElement("a", "logo", "Cine");
   logo.href = "index.html";
@@ -83,7 +94,7 @@ export function renderHeader({ query = "" } = {}) {
 
   inner.append(createLogo(), createNav(), form);
   header.append(inner);
-  document.body.prepend(header);
+  document.body.prepend(createSkipLink(), header);
 
   return { form, input };
 }
