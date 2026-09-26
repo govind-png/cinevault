@@ -1,10 +1,39 @@
 import { createElement } from "../utils/dom.js";
+import { getWatchlist, onWatchlistChange } from "../utils/storage.js";
 
 function createLogo() {
   const logo = createElement("a", "logo", "Cine");
   logo.href = "index.html";
   logo.append(createElement("span", "", "Vault"));
   return logo;
+}
+
+function createNav() {
+  const nav = createElement("nav", "site-nav");
+  nav.setAttribute("aria-label", "Main");
+
+  const link = createElement("a", "site-nav__link", "Watchlist ");
+  link.href = "watchlist.html";
+
+  const count = createElement("span", "site-nav__count");
+  const countLabel = createElement("span", "visually-hidden");
+  const countNumber = document.createTextNode("");
+  count.append(countNumber, countLabel);
+  link.append(count);
+
+  function updateCount() {
+    const total = getWatchlist().length;
+    countNumber.textContent = total;
+    countLabel.textContent = total === 1 ? " saved movie" : " saved movies";
+  }
+  updateCount();
+  onWatchlistChange(updateCount);
+  if (window.location.pathname.endsWith("/watchlist.html")) {
+    link.setAttribute("aria-current", "page");
+  }
+
+  nav.append(link);
+  return nav;
 }
 
 function createSearchForm(query) {
@@ -44,7 +73,7 @@ export function renderHeader({ query = "" } = {}) {
   const inner = createElement("div", "site-header__inner container");
   const { form, input } = createSearchForm(query);
 
-  inner.append(createLogo(), form);
+  inner.append(createLogo(), createNav(), form);
   header.append(inner);
   document.body.prepend(header);
 

@@ -2,6 +2,7 @@ import { getMovieDetails } from "../api/tmdb.js";
 import { TMDB_IMAGE_BASE_URL } from "../config.js";
 import { renderHeader } from "../components/header.js";
 import { createCastCard } from "../components/castCard.js";
+import { createWatchlistButton } from "../components/watchlistButton.js";
 import { showLoader, showError } from "../components/feedback.js";
 import { createElement } from "../utils/dom.js";
 import { getYear, formatRating, formatRuntime } from "../utils/format.js";
@@ -59,6 +60,8 @@ function createHero(movie) {
     movie.genres.forEach((genre) => genres.append(createElement("li", "genre-tag", genre.name)));
     info.append(genres);
   }
+
+  info.append(createWatchlistButton(movie));
 
   info.append(
     createElement("h2", "movie-hero__heading", "Overview"),

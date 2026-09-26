@@ -149,3 +149,30 @@
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
 }
+
+.feedback-message__link {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+.watchlist-button {
+  margin-top: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  border: 2px solid var(--color-accent);
+  border-radius: var(--radius);
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.watchlist-button--active {
+  background-color: transparent;
+  color: var(--color-accent);
+}
+
+.watchlist-button:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
+}
