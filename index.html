@@ -3,11 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CineVault</title>
+  <title>CineVault — Discover Movies</title>
+
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages/home.css">
 </head>
 <body>
-  <h1>CineVault</h1>
-  <p>Open the browser console to see movie data.</p>
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="logo">Cine<span>Vault</span></a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="movie-section">
+      <h2 class="section-title">Trending This Week</h2>
+      <div id="trending-grid" class="movie-grid"></div>
+    </section>
+  </main>
 
   <script type="module" src="js/pages/home.js"></script>
 </body>

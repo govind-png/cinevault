@@ -1,0 +1,31 @@
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+.site-header {
+  background-color: var(--color-surface);
+  padding: var(--space-md) 0;
+  margin-bottom: var(--space-lg);
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.logo span {
+  color: var(--color-accent);
+}
+
+.section-title {
+  margin-bottom: var(--space-md);
+}
+
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--space-md);
+}

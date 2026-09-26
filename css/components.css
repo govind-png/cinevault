@@ -1,0 +1,48 @@
+.movie-card {
+  background-color: var(--color-surface);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+.movie-card:hover {
+  transform: translateY(-4px);
+}
+
+.movie-card__link {
+  display: block;
+}
+
+.movie-card__link:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.movie-card__poster {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  background-color: var(--color-surface-light);
+}
+
+.movie-card__info {
+  padding: var(--space-sm);
+}
+
+.movie-card__title {
+  font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.movie-card__meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.movie-card__rating {
+  color: var(--color-accent);
+}
