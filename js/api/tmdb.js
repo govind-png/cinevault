@@ -9,7 +9,9 @@ async function request(endpoint) {
   });
 
   if (!response.ok) {
-    throw new Error(`TMDB request failed: ${response.status} ${response.statusText}`);
+    const error = new Error(`TMDB request failed: ${response.status} ${response.statusText}`);
+    error.status = response.status;
+    throw error;
   }
 
   return response.json();
@@ -18,10 +20,15 @@ async function request(endpoint) {
 export function getTrendingMovies() {
   return request("/trending/movie/week");
 }
+
 export function getPopularMovies() {
   return request("/movie/popular");
 }
 
 export function getTopRatedMovies() {
   return request("/movie/top_rated");
+}
+
+export function getMovieDetails(id) {
+  return request(`/movie/${id}?append_to_response=credits,videos`);
 }
