@@ -9,6 +9,7 @@ export function showLoader(container) {
 export function showError(container, message = "Something went wrong. Please try again later.") {
   const error = document.createElement("p");
   error.className = "feedback-message";
+  error.setAttribute("role", "alert");
   error.textContent = message;
   container.replaceChildren(error);
 }
