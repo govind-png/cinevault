@@ -117,6 +117,9 @@ function createTrailerSection(trailer) {
 
 function renderMovie(movie) {
   document.title = `${movie.title} — CineVault`;
+  if (movie.overview) {
+    document.querySelector('meta[name="description"]').content = movie.overview;
+  }
   container.replaceChildren(
     createHero(movie),
     createCastSection(movie.credits.cast),
