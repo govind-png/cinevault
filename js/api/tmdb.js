@@ -32,3 +32,7 @@ export function getTopRatedMovies() {
 export function getMovieDetails(id) {
   return request(`/movie/${id}?append_to_response=credits,videos`);
 }
+
+export function searchMovies(query) {
+  return request(`/search/movie?query=${encodeURIComponent(query)}&include_adult=false`);
+}
