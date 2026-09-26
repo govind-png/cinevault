@@ -7,11 +7,12 @@ A multi-page movie discovery site built with vanilla JavaScript and the TMDB API
 ## Features
 
 - **Home page** – Trending this week, Popular right now, and Top rated of all time, each with loading and error states.
-- **Movie details** – Backdrop, poster, tagline, release year, runtime, rating, genres, overview, the top 12 cast members, and the official YouTube trailer. Missing or invalid movie IDs show a friendly message.
+- **Movie details** – Backdrop, poster, tagline, release year, runtime, rating, genres, overview, the top 12 cast members, and the official YouTube trailer. Missing, invalid or unknown movie IDs show a "Movie not found" page with a link back home.
 - **Search** – A search box in the header on every page. On the search page, results update as you type (debounced), and the query lives in the URL (`search.html?query=dune`) so searches can be bookmarked and shared.
 - **Discover** – Filter by one or more genres, release year, and sort order (most popular, highest rated, newest). Filters are stored in the URL and work with the back button. "Load more" appends the next page without duplicates.
 - **Watchlist** – Save movies from the details page and manage them on the watchlist page. The header shows a live count, and changes sync across open tabs. Stored in `localStorage`, so no account is needed.
-- **Responsive and keyboard-friendly** – Works on phone and desktop, with labelled inputs, visible focus styles, and screen-reader announcements for results and state changes.
+- **Mobile-first and responsive** – Layouts are built for phones first and expand at wider screens, with 44px tap targets and smaller images on small screens.
+- **Accessible** – Skip to main content link, labelled inputs, visible focus styles on every control, sensible alt text, screen-reader announcements for results and state changes, and support for the reduced-motion setting.
 
 ## Tech stack
 
@@ -25,7 +26,7 @@ A multi-page movie discovery site built with vanilla JavaScript and the TMDB API
 ```
 cinevault/
 ├── *.html            # One page per view: index, movie, search, discover, watchlist
-├── assets/images/    # Static images, such as the placeholder poster
+├── assets/images/    # Static images: favicon and placeholder poster
 ├── css/
 │   ├── variables.css  # Design tokens: colors, spacing, radius
 │   ├── base.css       # Resets and global element styles
@@ -35,7 +36,7 @@ cinevault/
 └── js/
     ├── config.example.js  # Template for js/config.js (which is gitignored)
     ├── api/          # tmdb.js: the only file that calls the TMDB API
-    ├── components/   # Reusable UI: header, movie card, cast card, feedback, watchlist button
+    ├── components/   # Reusable UI: header, movie card, cast card, rating, feedback, watchlist button
     ├── pages/        # One controller per HTML page
     └── utils/        # Helpers: DOM, formatting, debounce, localStorage
 ```
@@ -82,11 +83,11 @@ cinevault/
 - **Debouncing** – Waiting until the user stops typing before searching, and ignoring slow responses that arrive after newer ones.
 - **localStorage** – Saving the watchlist as JSON (`JSON.stringify` / `JSON.parse`), with a safe fallback when the stored data is missing or corrupted.
 - **URL state** – Using `URLSearchParams` and the History API so searches and filters can be bookmarked, shared, and restored with the back button.
+- **Mobile-first CSS and accessibility** – Writing phone styles first and adding `min-width` media queries for larger screens, and checking contrast, tap target sizes, headings, and keyboard focus.
 - **Feature branches** – Building each feature on its own Git branch and merging it into `main` once it has been tested.
 
 ## Roadmap
 
-- **Polish** – Further responsive and accessibility improvements.
 - **Deployment** – Add a server-side proxy for the TMDB token and publish the site.
 
 ## Attribution
