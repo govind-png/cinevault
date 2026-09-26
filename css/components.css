@@ -69,3 +69,43 @@
   color: var(--color-text-muted);
   padding: var(--space-lg) 0;
 }
+.genre-tag {
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--color-surface-light);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.cast-card {
+  background-color: var(--color-surface);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.cast-card__photo {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  background-color: var(--color-surface-light);
+}
+
+.cast-card__name,
+.cast-card__character {
+  padding: 0 var(--space-sm);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cast-card__name {
+  padding-top: var(--space-sm);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.cast-card__character {
+  padding-bottom: var(--space-sm);
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
