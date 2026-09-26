@@ -39,6 +39,8 @@ function createHero(movie) {
   if (movie.backdrop_path) {
     const backdrop = createElement("img", "movie-hero__backdrop");
     backdrop.src = `${TMDB_IMAGE_BASE_URL}/w1280${movie.backdrop_path}`;
+    backdrop.srcset = `${TMDB_IMAGE_BASE_URL}/w780${movie.backdrop_path} 780w, ${TMDB_IMAGE_BASE_URL}/w1280${movie.backdrop_path} 1280w`;
+    backdrop.sizes = "100vw";
     backdrop.alt = "";
     hero.append(backdrop);
   }
@@ -46,9 +48,13 @@ function createHero(movie) {
   const content = createElement("div", "movie-hero__content container");
 
   const poster = createElement("img", "movie-hero__poster");
-  poster.src = movie.poster_path
-    ? `${TMDB_IMAGE_BASE_URL}/w342${movie.poster_path}`
-    : PLACEHOLDER_POSTER;
+  if (movie.poster_path) {
+    poster.src = `${TMDB_IMAGE_BASE_URL}/w342${movie.poster_path}`;
+    poster.srcset = `${TMDB_IMAGE_BASE_URL}/w185${movie.poster_path} 185w, ${TMDB_IMAGE_BASE_URL}/w342${movie.poster_path} 342w`;
+    poster.sizes = "(min-width: 768px) 240px, 200px";
+  } else {
+    poster.src = PLACEHOLDER_POSTER;
+  }
   poster.alt = `Poster for ${movie.title}`;
 
   const info = createElement("div", "movie-hero__info");

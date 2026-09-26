@@ -22,9 +22,15 @@ export function createMovieCard(movie) {
   `;
 
   const poster = card.querySelector(".movie-card__poster");
-  poster.src = movie.poster_path
-    ? `${TMDB_IMAGE_BASE_URL}/w342${movie.poster_path}`
-    : PLACEHOLDER_POSTER;
+  if (movie.poster_path) {
+    // The browser picks the smallest file that looks sharp at the card's width:
+    // two cards per row on phones (about 45% of the screen), about 185px from tablets up.
+    poster.src = `${TMDB_IMAGE_BASE_URL}/w342${movie.poster_path}`;
+    poster.srcset = `${TMDB_IMAGE_BASE_URL}/w185${movie.poster_path} 185w, ${TMDB_IMAGE_BASE_URL}/w342${movie.poster_path} 342w`;
+    poster.sizes = "(min-width: 768px) 185px, 45vw";
+  } else {
+    poster.src = PLACEHOLDER_POSTER;
+  }
   // The title is right below and inside the same link, so the poster is decorative here.
   poster.alt = "";
 
