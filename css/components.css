@@ -119,16 +119,24 @@
 
 .search-form {
   display: flex;
-  flex: 1 1 240px;
+  flex: 1 1 100%;
   min-width: 0;
-  max-width: 420px;
   gap: var(--space-sm);
+}
+
+/* Tablets and up: share the row with the logo and links, 240-420px wide */
+@media (min-width: 768px) {
+  .search-form {
+    flex: 1 1 240px;
+    max-width: 420px;
+  }
 }
 
 .search-form__input {
   flex: 1;
   width: 100%;
   min-width: 0;
+  min-height: var(--tap-target);
   padding: var(--space-sm) var(--space-md);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
@@ -142,6 +150,7 @@
 }
 
 .search-form__button {
+  min-height: var(--tap-target);
   padding: var(--space-sm) var(--space-md);
   border: 0;
   border-radius: var(--radius);
@@ -153,11 +162,15 @@
 }
 
 .feedback-message__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-target);
   color: var(--color-accent);
   text-decoration: underline;
 }
 
 .watchlist-button {
+  min-height: var(--tap-target);
   margin-top: var(--space-md);
   padding: var(--space-sm) var(--space-md);
   border: 2px solid var(--color-accent);
@@ -180,6 +193,7 @@
 }
 
 .genre-chip {
+  min-height: var(--tap-target);
   padding: var(--space-xs) var(--space-md);
   border: 1px solid var(--color-border);
   border-radius: 999px;

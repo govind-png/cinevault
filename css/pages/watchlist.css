@@ -15,6 +15,7 @@
 }
 
 .watchlist-item__remove {
+  min-height: var(--tap-target);
   padding: var(--space-xs) var(--space-sm);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);

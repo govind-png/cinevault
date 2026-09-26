@@ -15,5 +15,6 @@
   --space-lg: 2rem;
 
   --radius: 8px;
+  --tap-target: 2.75rem; /* 44px: minimum height for anything you tap */
   --max-width: 1200px;
 }

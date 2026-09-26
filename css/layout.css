@@ -7,6 +7,9 @@
 
 .skip-link {
   position: absolute;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-target);
   top: var(--space-sm);
   left: var(--space-sm);
   z-index: 10;
@@ -23,9 +26,11 @@
   outline: 2px solid var(--color-text);
 }
 
+/* Header, mobile first: logo and links share the top row,
+   the search form (components.css) takes a full row underneath. */
 .site-header {
   background-color: var(--color-surface);
-  padding: var(--space-md) 0;
+  padding: var(--space-sm) 0;
   margin-bottom: var(--space-lg);
 }
 
@@ -33,22 +38,29 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--space-md);
+  gap: var(--space-sm) var(--space-md);
 }
 
 .logo {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-target);
   margin-right: auto;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 700;
 }
 
 .site-nav {
   display: flex;
-  gap: var(--space-md);
+  gap: var(--space-xs);
 }
 
 .site-nav__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  min-height: var(--tap-target);
+  padding: 0 var(--space-sm);
   font-weight: 600;
   color: var(--color-text-muted);
 }
@@ -71,6 +83,21 @@
 
 .logo span {
   color: var(--color-accent);
+}
+
+/* Tablets and up: more breathing room, everything on one row */
+@media (min-width: 768px) {
+  .site-header {
+    padding: var(--space-md) 0;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+  }
+
+  .site-nav {
+    gap: var(--space-sm);
+  }
 }
 
 .section-title {
