@@ -18,30 +18,37 @@ A multi-page movie discovery site built with vanilla JavaScript and the TMDB API
 
 - HTML, CSS (custom properties, BEM naming)
 - Vanilla JavaScript with ES modules
-- [TMDB API](https://developer.themoviedb.org/docs)
+- [TMDB API](https://developer.themoviedb.org/docs), called through a [Netlify Function](https://docs.netlify.com/build/functions/overview/) so the token stays on the server
 - No frameworks, libraries, or build tools
 
 ## Project structure
 
 ```
 cinevault/
-├── *.html            # One page per view: index, movie, search, discover, watchlist
-├── assets/images/    # Static images: favicon and placeholder poster
-├── css/
-│   ├── variables.css  # Design tokens: colors, spacing, radius
-│   ├── base.css       # Resets and global element styles
-│   ├── layout.css     # Container, header, and grid layout
-│   ├── components.css # Styles for reusable components
-│   └── pages/        # Styles used by a single page
-└── js/
-    ├── config.example.js  # Template for js/config.js (which is gitignored)
-    ├── api/          # tmdb.js: the only file that calls the TMDB API
-    ├── components/   # Reusable UI: header, movie card, cast card, rating, feedback, watchlist button
-    ├── pages/        # One controller per HTML page
-    └── utils/        # Helpers: DOM, formatting, debounce, localStorage
+├── public/                # The website (the only folder Netlify publishes)
+│   ├── *.html             # One page per view: index, movie, search, discover, watchlist
+│   ├── assets/images/     # Static images: favicon and placeholder poster
+│   ├── css/
+│   │   ├── variables.css  # Design tokens: colors, spacing, radius
+│   │   ├── base.css       # Resets and global element styles
+│   │   ├── layout.css     # Container, header, and grid layout
+│   │   ├── components.css # Styles for reusable components
+│   │   └── pages/         # Styles used by a single page
+│   └── js/
+│       ├── config.js      # Public settings only (image URL), no secrets
+│       ├── api/           # tmdb.js: the only file that requests movie data
+│       ├── components/    # Reusable UI: header, movie card, cast card, rating, feedback, watchlist button
+│       ├── pages/         # One controller per HTML page
+│       └── utils/         # Helpers: DOM, formatting, debounce, localStorage
+├── netlify/functions/     # tmdb.mjs: serverless proxy that adds the token and calls TMDB
+├── netlify.toml           # Netlify settings: publish folder, functions folder, local dev
+├── .env.example           # Template for .env, which holds your token locally (gitignored)
+└── docs/screenshots/      # Images for this README
 ```
 
 ## Getting started
+
+You need [Node.js](https://nodejs.org) (the LTS version) to run the Netlify CLI, which serves the site and runs the proxy function locally.
 
 1. **Clone the repo**
 
@@ -50,29 +57,43 @@ cinevault/
    cd cinevault
    ```
 
-2. **Create your config file**
+2. **Install the Netlify CLI**
 
    ```bash
-   cp js/config.example.js js/config.js
+   npm install -g netlify-cli
    ```
 
-3. **Add your TMDB token.** Create a free account on [themoviedb.org](https://www.themoviedb.org), go to [Settings → API](https://www.themoviedb.org/settings/api), and copy the **API Read Access Token**. Paste it into `js/config.js` in place of `YOUR_TMDB_READ_ACCESS_TOKEN`.
-
-4. **Start a local server** from the project folder
+3. **Add your TMDB token.** Create a free account on [themoviedb.org](https://www.themoviedb.org), go to [Settings → API](https://www.themoviedb.org/settings/api), and copy the **API Read Access Token**. Then create your `.env` file and paste the token in place of `YOUR_TMDB_READ_ACCESS_TOKEN`:
 
    ```bash
-   python3 -m http.server 8000
+   cp .env.example .env
    ```
 
-5. Open **http://localhost:8000**.
+4. **Start the dev server** from the project folder
 
-> **Why a local server?** The JavaScript is split into ES modules (`import`/`export`). Browsers block module scripts on pages opened directly from disk (`file://` URLs) for security reasons, so if you double-click `index.html` no movies load. Serving the files over `http://` fixes this.
+   ```bash
+   netlify dev
+   ```
+
+5. Open **http://localhost:8888**.
+
+> **Why `netlify dev` and not a simple file server?** The pages load movie data from `/api/tmdb/...`, which only exists when the serverless function is running. `netlify dev` serves the `public/` folder, runs the function, and loads your token from `.env`. A plain server like `python3 -m http.server` would show the pages, but no movies would load.
+
+## Deployment
+
+The site is set up for [Netlify](https://www.netlify.com):
+
+1. Import the GitHub repo into Netlify. `netlify.toml` already tells it to publish `public/` and where the function lives, and no build command is needed.
+2. In **Site configuration → Environment variables**, add `TMDB_TOKEN` with your TMDB API Read Access Token (with the Functions scope included).
+3. Deploy. The site is served from Netlify's CDN, and movie requests go through the function.
 
 ## Security note
 
-- `js/config.js` holds your real token and is listed in `.gitignore`, so it is never committed.
-- `js/config.example.js` is committed and must only ever contain the placeholder. Never put a real token in it.
-- **Limitation:** this is a front-end-only app, so the token is sent from the browser and anyone using the site can see it in the developer tools. That is fine for local development with a read-only token, but not for a public deployment. A small server-side proxy that keeps the token private is planned before deploying.
+- The TMDB token is only ever read on the server, from the `TMDB_TOKEN` environment variable: from `.env` locally (gitignored) and from Netlify's environment variables in production. It is never in the repo or sent to the browser.
+- Never put a real token in `.env.example`, which is committed.
+- The proxy only accepts `GET` requests for the TMDB endpoints and query parameters this site uses, and rejects everything else, so it can't be used as an open proxy. Error responses are generic; details only go to the function logs.
+- Only the `public/` folder is published, so files like `.env` and the function source are never served as web pages.
+- Images still load directly from `image.tmdb.org`, because they don't need a token.
 
 ## What I learned
 
@@ -83,12 +104,9 @@ cinevault/
 - **Debouncing** – Waiting until the user stops typing before searching, and ignoring slow responses that arrive after newer ones.
 - **localStorage** – Saving the watchlist as JSON (`JSON.stringify` / `JSON.parse`), with a safe fallback when the stored data is missing or corrupted.
 - **URL state** – Using `URLSearchParams` and the History API so searches and filters can be bookmarked, shared, and restored with the back button.
+- **Serverless functions and environment variables** – Keeping a secret on the server by routing API calls through a Netlify Function that reads the token from an environment variable, with an allowlist so it can't be misused.
 - **Mobile-first CSS and accessibility** – Writing phone styles first and adding `min-width` media queries for larger screens, and checking contrast, tap target sizes, headings, and keyboard focus.
 - **Feature branches** – Building each feature on its own Git branch and merging it into `main` once it has been tested.
-
-## Roadmap
-
-- **Deployment** – Add a server-side proxy for the TMDB token and publish the site.
 
 ## Attribution
 
